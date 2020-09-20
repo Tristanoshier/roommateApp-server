@@ -28,8 +28,6 @@ router.post('/signup', (req, res) => {
         )
 });
 
-// GET
-
 // UPDATE
 
 module.exports = router;
