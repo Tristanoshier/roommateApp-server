@@ -12,14 +12,14 @@ User = sequelize.import('./models/user');
 StoreItem = sequelize.import('./models/storeItem');
 Chore = sequelize.import('./models/chore');
 
-User.belongsTo(PlaceOfLiving);
 PlaceOfLiving.hasMany(User);
+User.belongsTo(PlaceOfLiving);
 
-Chore.belongsTo(User);
-User.hasMany(Chore);
+PlaceOfLiving.hasMany(Chore);
+Chore.belongsTo(PlaceOfLiving);
 
-StoreItem.belongsTo(User);
-User.hasMany(StoreItem);
+PlaceOfLiving.hasMany(StoreItem);
+StoreItem.belongsTo(PlaceOfLiving);
 
 
 module.exports = sequelize;
