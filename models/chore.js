@@ -1,10 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
     const Chore = sequelize.define('chore', {
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            unique: false
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,

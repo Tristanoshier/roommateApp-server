@@ -1,33 +1,37 @@
 require('dotenv').config();
-const router = require('express').Router();
-const placeOfLiving = require("../db").import("../models/placeOfLiving");
+const router = require("express").Router();;
+const PlaceOfLiving = require('../db').import('../models/placeOfLiving');
+const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
-router.post("/signup", (req, res) => {
-    const place = {
-        isHouse: req.body.isHouse,
-        numOfPeople: req.body.numOfPeople
-    }
-    PlaceOfLiving.create(place)
-        .then(
-            placeOfLivingInfo => res.status(200).json(placeOfLivingInfo)
-        )
-        .catch(err => res.json({
-            error: err
-        }))
-})
-
-router.get("/find", (req, res) => {
-    placeOfLiving.findOne({
-        where: {
-            id: req.body.id
-        }
+// POST
+router.post('/signup', (req, res) => {
+    PlaceOfLiving.create({
+        name: req.body.name,
+        password: bcrypt.hashSync(req.body.password, 10),
+        isHouse: req.body.isHouse
     })
         .then(
-            placeOfLivingInfo => res.status(200).json(placeOfLivingInfo)
+            createSuccess = (placeOfLiving) => {
+                let token = jwt.sign({
+                    id: placeOfLiving.id
+                }, process.env.JWT_SECRET, {
+                    expiresIn: 60 * 60 * 24
+                })
+                res.json({
+                    placeOfLiving: placeOfLiving,
+                    message: 'place of living created',
+                    sessionToken: token
+                })
+            },
+            createError = err => res.send(500, err)
         )
-        .catch(err => res.status(500).json({
-            error: err
-        }))
-})
+});
+
+// GET
+
+// UPDATE
 
 module.exports = router;
+
+

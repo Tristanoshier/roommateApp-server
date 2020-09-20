@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require('../db').import('../models/user');
+const PlaceOfLiving = require('../db').import('../models/placeOfLiving');
 
 const validateSession = (req, res, next) => {
     if (req.method === 'OPTIONS') {
@@ -9,14 +9,14 @@ const validateSession = (req, res, next) => {
 
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (!err && decoded) {
-                User.findOne({
+                PlaceOfLiving.findOne({
                     where: {
                         id: decoded.id
                     }
                 })
-                    .then(user => {
-                        if (!user) throw 'err';
-                        req.user = user;
+                    .then(placeOfLiving => {
+                        if (!placeOfLiving) throw 'err';
+                        req.placeOfLiving = placeOfLiving;
                         return next();
                     })
                     .catch(err => next(err))
