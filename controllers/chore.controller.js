@@ -1,3 +1,7 @@
+require('dotenv').config();
+const router = require('express').Router();
+const Chore = require('../db').import('../models/chore');
+
 // POST
 router.post('/create', (req, res) => {
     const chore = {
@@ -7,20 +11,22 @@ router.post('/create', (req, res) => {
         placeOfLivingId: req.placeOfLiving.id
     }
     Chore.create(chore)
-    .then(choreInfo => res.status(200).json(choreInfo))
-    .catch(err => res.status(500).json({ error: err}))  
+        .then(choreInfo => res.status(200).json(choreInfo))
+        .catch(err => res.status(500).json({ error: err }))
 });
 
 // GET
 router.get('/find', (req, res) => {
     PlaceOfLiving.findOne({
-            where: {
-                id: req.placeOfLiving.id
-            },
-            include: ['chores']
-        })
+        where: {
+            id: req.placeOfLiving.id
+        },
+        include: ['chores']
+    })
         .then(chore => res.status(200).json(chore))
         .catch(err => res.status(500).json({
             error: err
         }))
 });
+
+module.exports = router;
