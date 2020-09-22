@@ -1,5 +1,6 @@
 require('dotenv').config();
-const router = require('express').Router();
+const router = require("express").Router();
+const PlaceOfLiving = require('../db').import('../models/placeOfLiving');
 const Chore = require('../db').import('../models/chore');
 
 // POST
