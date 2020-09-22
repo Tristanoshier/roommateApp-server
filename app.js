@@ -7,6 +7,7 @@ const app = express();
 // controller imports
 const placeOfLiving = require("./controllers/placeOfLiving.controller");
 const user = require("./controllers/user.controller");
+const storeItem = require("./controllers/storeItem.controller");
 
 const chore = require("./controllers/chore.controller");
 
@@ -27,6 +28,10 @@ app.use('/user', user);
 app.use('/chore', chore);
 
 
+//routes
+app.use("/placeOfLiving", placeOfLiving);
+app.use("/user", user);
+app.use("/storeitem", storeItem);
 
 
 app.listen(process.env.PORT, () => console.log('app is listening on port 3001'));

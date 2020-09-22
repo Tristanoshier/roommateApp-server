@@ -12,8 +12,8 @@ router.post('/signup', (req, res) => {
         placeOfLivingId: req.placeOfLiving.id
     }
     User.create(user)
-    .then(userInfo => res.status(200).json(userInfo))
-    .catch(err => res.status(500).json({ error: err}))  
+        .then(userInfo => res.status(200).json(userInfo))
+        .catch(err => res.status(500).json({ error: err }))
 });
 
 // GET
