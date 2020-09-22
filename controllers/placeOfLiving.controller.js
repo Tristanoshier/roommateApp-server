@@ -10,7 +10,7 @@ router.post('/signup', (req, res) => {
         name: req.body.name,
         password: bcrypt.hashSync(req.body.password, 10),
         isHouse: req.body.isHouse
-        })
+    })
         .then(
             createSuccess = (placeOfLiving) => {
                 let token = jwt.sign({

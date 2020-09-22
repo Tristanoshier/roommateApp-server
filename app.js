@@ -7,6 +7,7 @@ const app = express();
 // controller imports
 const placeOfLiving = require("./controllers/placeOfLiving.controller");
 const user = require("./controllers/user.controller");
+const storeItem = require("./controllers/storeItem.controller");
 
 // db import and sync
 const sequelize = require('./db');
@@ -23,6 +24,10 @@ app.use(require('./middleware/validate-session'));
 app.use('/user', user);
 
 
+//routes
+app.use("/placeOfLiving", placeOfLiving);
+app.use("/user", user);
+app.use("/storeitem", storeItem);
 
 
 app.listen(process.env.PORT, () => console.log('app is listening on port 3001'));
