@@ -8,6 +8,8 @@ const app = express();
 const placeOfLiving = require("./controllers/placeOfLiving.controller");
 const user = require("./controllers/user.controller");
 
+const chore = require("./controllers/chore.controller");
+
 // db import and sync
 const sequelize = require('./db');
 sequelize.sync();
@@ -18,9 +20,11 @@ app.use(express.json());
 app.use(require('./middleware/headers'));
 
 // routes
-app.use('/placeOfLiving', placeOfLiving);
+app.use('/placeofliving', placeOfLiving);
 app.use(require('./middleware/validate-session'));
 app.use('/user', user);
+
+app.use('/chore', chore);
 
 
 

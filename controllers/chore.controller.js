@@ -1,3 +1,8 @@
+require('dotenv').config();
+const router = require("express").Router();
+const PlaceOfLiving = require('../db').import('../models/placeOfLiving');
+const Chore = require('../db').import('../models/chore');
+
 // POST
 router.post('/create', (req, res) => {
     const chore = {
@@ -24,3 +29,5 @@ router.get('/find', (req, res) => {
             error: err
         }))
 });
+
+module.exports = router;
