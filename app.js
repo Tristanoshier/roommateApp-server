@@ -8,7 +8,6 @@ const app = express();
 const placeOfLiving = require("./controllers/placeOfLiving.controller");
 const user = require("./controllers/user.controller");
 const storeItem = require("./controllers/storeItem.controller");
-
 const chore = require("./controllers/chore.controller");
 
 // db import and sync
@@ -24,15 +23,8 @@ app.use(require('./middleware/headers'));
 app.use('/placeofliving', placeOfLiving);
 app.use(require('./middleware/validate-session'));
 app.use('/user', user);
-
 app.use('/chore', chore);
-
-
-//routes
-app.use("/placeOfLiving", placeOfLiving);
-app.use("/user", user);
 app.use("/storeitem", storeItem);
-
 
 app.listen(process.env.PORT, () => console.log('app is listening on port 3001'));
 
