@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             unique: false
         },
         frequency: {
-            type: DataTypes.DATE, // need to figure out how user should enter time
+            type: DataTypes.INTEGER, // need to figure out how user should enter time
             allowNull: true,
             unique: false
         }
