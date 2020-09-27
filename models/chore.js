@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
             unique: false
         },
         frequency: {
-            type: DataTypes.INTEGER, // need to figure out how user should enter time
+            type: DataTypes.INTEGER,
             allowNull: true,
             unique: false
         }
     });
     return Chore;
-}
+};
