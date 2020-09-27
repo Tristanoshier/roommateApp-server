@@ -1,5 +1,5 @@
 require('dotenv').config();
-const router = require("express").Router();
+const router = require('express').Router();
 const PlaceOfLiving = require('../db').import('../models/placeOfLiving');
 const Chore = require('../db').import('../models/chore');
 
@@ -10,10 +10,10 @@ router.post('/create', (req, res) => {
         isActive: req.body.isActive,
         frequency: req.body.frequency,
         placeOfLivingId: req.placeOfLiving.id
-    }
+    };
     Chore.create(chore)
         .then(choreInfo => res.status(200).json(choreInfo))
-        .catch(err => res.status(500).json({ error: err }))
+        .catch(err => res.status(500).json({ error: err }));
 });
 
 // GET
@@ -25,9 +25,7 @@ router.get('/find', (req, res) => {
         include: ['chores']
     })
         .then(chore => res.status(200).json(chore))
-        .catch(err => res.status(500).json({
-            error: err
-        }))
+        .catch(err => res.status(500).json({ error: err }));
 });
 
 module.exports = router;
