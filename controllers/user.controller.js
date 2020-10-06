@@ -32,4 +32,16 @@ router.get('/find', (req, res) => {
         }));
 });
 
+// DELETE
+router.delete('/delete/:id', (req, res) => {
+    User.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(user => res.status(200).json(user))
+        .catch(err => res.json({
+            error: err
+        }));
+});
+
 module.exports = router;
