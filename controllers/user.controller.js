@@ -32,6 +32,17 @@ router.get('/find', (req, res) => {
         }));
 });
 
+// UPDATE
+router.put('/update/:id', (req, res) => {
+    User.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(user => res.status(200).json(user))
+        .catch(() => res.json(req.errors))
+});
+
 // DELETE
 router.delete('/delete/:id', (req, res) => {
     User.destroy({
