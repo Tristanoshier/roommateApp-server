@@ -28,4 +28,27 @@ router.get('/find', (req, res) => {
         .catch(err => res.status(500).json({ error: err }));
 });
 
+// UPDATE
+router.put('/update/:id', (req, res) => {
+    Chore.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(chore => res.status(200).json(chore))
+        .catch(() => res.json(req.errors))
+});
+
+// DELETE
+router.delete('/delete/:id', (req, res) => {
+    Chore.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(chore => res.status(200).json(chore))
+        .catch(err => res.json({
+            error: err
+        }));
+});
+
 module.exports = router;

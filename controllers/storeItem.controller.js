@@ -32,4 +32,27 @@ router.get('/find', (req, res) => {
         }));
 });
 
+// UPDATE
+router.put('/update/:id', (req, res) => {
+    StoreItem.update(req.body, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(storeItem => res.status(200).json(storeItem))
+        .catch(() => res.json(req.errors))
+});
+
+// DELETE
+router.delete('/delete/:id', (req, res) => {
+    StoreItem.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(storeItem => res.status(200).json(storeItem))
+        .catch(err => res.json({
+            error: err
+        }));
+});
+
 module.exports = router;
