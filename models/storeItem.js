@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             unique: false
         },
+        // add quantity
         recommendedPlaceToBuy: {
             type: DataTypes.STRING,
             allowNull: true,
