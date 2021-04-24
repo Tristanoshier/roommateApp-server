@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: true,
             unique: false
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            unique: false
         }
     });
     return Chore;

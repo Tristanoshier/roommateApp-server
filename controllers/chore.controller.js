@@ -4,12 +4,13 @@ const PlaceOfLiving = require('../db').import('../models/placeOfLiving');
 const Chore = require('../db').import('../models/chore');
 
 // POST
-router.post('/create', (req, res) => {
+router.post('/create:polids', (req, res) => {
     const chore = {
         name: req.body.name,
         isActive: req.body.isActive,
         frequency: req.body.frequency,
-        placeOfLivingId: req.placeOfLiving.id
+        placeOfLivingId: req.params.polid,
+        userId: req.body.userId
     };
     Chore.create(chore)
         .then(choreInfo => res.status(200).json(choreInfo))
@@ -17,10 +18,10 @@ router.post('/create', (req, res) => {
 });
 
 // GET
-router.get('/find', (req, res) => {
+router.get('/find:polid', (req, res) => {
     PlaceOfLiving.findOne({
         where: {
-            id: req.placeOfLiving.id
+            id: req.params.polid
         },
         include: ['chores']
     })

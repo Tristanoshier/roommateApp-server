@@ -1,58 +1,73 @@
 require('dotenv').config();
 const router = require('express').Router();
 const User = require('../db').import('../models/user');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // POST
 router.post('/signup', (req, res) => {
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        phoneNumber: req.body.phoneNumber,
-        avatar: req.body.avatar,
-        placeOfLivingId: req.placeOfLiving.id
-    };
-    User.create(user)
-        .then(userInfo => res.status(200).json(userInfo))
-        .catch(err => res.status(500).json({
-            error: err
-        }));
+    User.create({
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, 10),
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phoneNumber: req.body.phoneNumber,
+            avatar: req.body.avatar
+        })
+        .then(createSuccess = (user) => {
+                let token = jwt.sign({
+                        id: user.id
+                    },
+                    process.env.JWT_SECRET, {
+                        expiresIn: 60 * 60 * 24
+                    });
+                res.json({
+                    user: user,
+                    message: 'user created',
+                    sessionToken: token
+                });
+            },
+            createError = err => res.send(500, err)
+        );
 });
 
-// GET
-router.get('/find', (req, res) => {
-    PlaceOfLiving.findOne({
+router.post('/login', (req, res) => {
+    User.findOne({
             where: {
-                id: req.placeOfLiving.id
-            },
-            include: ['users']
+                email: req.body.email
+            }
         })
-        .then(user => res.status(200).json(user))
-        .catch(err => res.status(500).json({
-            error: err
+        .then(user => {
+            if (user) {
+                bcrypt.compare(req.body.password, user.password, (err, matches) => {
+                    if (matches) {
+                        let token = jwt.sign({
+                            id: user.id
+                        }, process.env.JWT_SECRET, {
+                            expiresIn: 60 * 60 * 24
+                        });
+                        res.json({
+                            user: user,
+                            message: 'login success',
+                            sessionToken: token
+                        });
+                    } else {
+                        res.status(502).send({
+                            error: 'bad gateway'
+                        });
+                    };
+                });
+            } else {
+                res.status(500).send({
+                    error: "failed to authenticate"
+                });
+            };
+        }, err => status(501).send({
+            error: 'failed to process',
+            err
         }));
 });
 
 // UPDATE
-router.put('/update/:id', (req, res) => {
-    User.update(req.body, {
-            where: {
-                id: req.params.id
-            }
-        })
-        .then(user => res.status(200).json(user))
-        .catch(() => res.json(req.errors))
-});
-
-// DELETE
-router.delete('/delete/:id', (req, res) => {
-    User.destroy({
-            where: {
-                id: req.params.id
-            }
-        }).then(user => res.status(200).json(user))
-        .catch(err => res.json({
-            error: err
-        }));
-});
 
 module.exports = router;

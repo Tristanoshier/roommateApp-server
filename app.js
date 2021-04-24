@@ -5,8 +5,8 @@ const express = require('express');
 const app = express();
 
 // controller imports
-const placeOfLiving = require('./controllers/placeOfLiving.controller');
 const user = require('./controllers/user.controller');
+const placeOfLiving = require('./controllers/placeOfLiving.controller');
 const storeItem = require('./controllers/storeItem.controller');
 const chore = require('./controllers/chore.controller');
 
@@ -20,9 +20,9 @@ app.use(express.json());
 app.use(require('./middleware/headers'));
 
 // routes
-app.use('/placeofliving', placeOfLiving);
-app.use(require('./middleware/validate-session'));
 app.use('/user', user);
+app.use(require('./middleware/validate-session'));
+app.use('/placeofliving', placeOfLiving);
 app.use('/chore', chore);
 app.use('/storeitem', storeItem);
 

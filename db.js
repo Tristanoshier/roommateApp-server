@@ -10,21 +10,28 @@ sequelize.authenticate()
     .catch((err => console.log(err)));
 
 // model imports
-PlaceOfLiving = sequelize.import('./models/placeOfLiving');
 User = sequelize.import('./models/user');
+PlaceOfLiving = sequelize.import('./models/placeOfLiving');
 StoreItem = sequelize.import('./models/storeItem');
 Chore = sequelize.import('./models/chore');
 
 // db table associations 
-PlaceOfLiving.hasMany(User);
-User.belongsTo(PlaceOfLiving);
 
-PlaceOfLiving.hasMany(Chore);
-Chore.belongsTo(PlaceOfLiving);
+
+// do research on many to many relationships
+User.hasOne(PlaceOfLiving)
+PlaceOfLiving.belongsToMany(User);
 
 PlaceOfLiving.hasMany(StoreItem);
 StoreItem.belongsTo(PlaceOfLiving);
 
+PlaceOfLiving.hasMany(Chore);
+Chore.belongsTo(PlaceOfLiving);
 
+User.hasMany(StoreItem);
+StoreItem.belongsTo(User);
+
+User.hasMany(Chore);
+Chore.belongsTo(User);
 module.exports = sequelize;
 

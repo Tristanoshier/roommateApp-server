@@ -3,13 +3,14 @@ const router = require('express').Router();
 const StoreItem = require('../db').import('../models/storeItem');
 
 // POST
-router.post('/create', (req, res) => {
+router.post('/create:polid', (req, res) => {
     const storeItem = {
         name: req.body.name,
         isActive: req.body.isActive,
         price: req.body.price,
         recommendedPlaceToBuy: req.body.recommendedPlaceToBuy,
-        placeOfLivingId: req.placeOfLiving.id
+        placeOfLivingId: req.params.polid,
+        userId: req.body.userId
     };
     StoreItem.create(storeItem)
         .then(storeItemInfo => res.status(200).json(storeItemInfo))
@@ -19,10 +20,10 @@ router.post('/create', (req, res) => {
 });
 
 // GET
-router.get('/find', (req, res) => {
+router.get('/find:polid', (req, res) => {
     PlaceOfLiving.findOne({
             where: {
-                id: req.placeOfLiving.id
+                id: req.params.polid
             },
             include: ['storeItems']
         })

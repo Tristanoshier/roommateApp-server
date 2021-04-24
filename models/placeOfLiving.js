@@ -1,6 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const PlaceOfLiving = sequelize.define('placeOfLiving', {
-        name: {
+        displayName: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false
+        },
+        placeUsername: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
@@ -9,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             unique: false
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false        
         },
         isHouse: {
             type: DataTypes.BOOLEAN,

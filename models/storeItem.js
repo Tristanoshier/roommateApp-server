@@ -15,10 +15,19 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             unique: false
         },
-        // add quantity
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            unique: false
+        },
         recommendedPlaceToBuy: {
             type: DataTypes.STRING,
             allowNull: true,
+            unique: false
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
             unique: false
         }
     });
